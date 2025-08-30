@@ -1,0 +1,5 @@
+- public fx api: how to store data
+- real time use case
+- docker-containerization
+
+already there exists a similar website called Xe.com in which you can not only analyse the exchange rates between diff companies  but also send money using it itself. the main difference between that and this is that exchange rates statisics is not available for exchange from india and there is no such thinf here for india

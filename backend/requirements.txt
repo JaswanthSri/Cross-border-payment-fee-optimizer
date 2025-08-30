@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+pymongo[srv]
+python-dotenv
+pandas
+openpyxl
+requests
