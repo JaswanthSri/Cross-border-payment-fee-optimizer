@@ -2,10 +2,13 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { TransferForm, type FormData } from "./transfer-form"
 import { CostAnalysis } from "./cost-analysis"
 import { ProviderRecommendations } from "./provider-recommendations"
 import { AllProvidersRanked } from "./all-providers-ranked"
+import { useAuth } from "@/lib/auth"
+import { Lock } from "lucide-react"
 
 export interface AnalysisResponse {
   costs: {
@@ -29,11 +32,17 @@ export interface AnalysisResponse {
 }
 
 export function TransferOptimizer() {
+  const { user, token } = useAuth()
   const [analysisData, setAnalysisData] = useState<AnalysisResponse | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const handleTransferSubmit = async (data: FormData) => {
+    if (!token) {
+      setError("Please log in to analyze transfer costs")
+      return
+    }
+
     setIsAnalyzing(true)
     setError(null)
     setAnalysisData(null) // Clear previous results
@@ -41,7 +50,10 @@ export function TransferOptimizer() {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/transfer/analyze", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({
           amount: data.amount,
           source_country: data.fromCountry,
@@ -61,6 +73,27 @@ export function TransferOptimizer() {
     } finally {
       setIsAnalyzing(false)
     }
+  }
+
+  // Show authentication required message if user is not logged in
+    if (!user) {
+    return (
+      <Card className="border-2 border-primary/20">
+        <CardContent className="py-16 text-center">
+          <div className="space-y-4">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+              <Lock className="w-8 h-8 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-2">Authentication Required</h3>
+              <p className="text-muted-foreground">
+                Please use the "Sign In" button in the top-right corner to create an account or log in.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    )
   }
 
   return (
@@ -100,6 +133,7 @@ export function TransferOptimizer() {
           <AllProvidersRanked analysisData={analysisData} />
         </>
       )}
-    </div>
-  )
-}
+
+            </div>
+    )
+  }

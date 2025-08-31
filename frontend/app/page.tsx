@@ -1,4 +1,7 @@
 import { TransferOptimizer } from "@/components/transfer-optimizer"
+import { useAuth } from "@/lib/auth"
+import { Button } from "@/components/ui/button"
+import { User, Lock } from "lucide-react"
 
 export default function HomePage() {
   return (
