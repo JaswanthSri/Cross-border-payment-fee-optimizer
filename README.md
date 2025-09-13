@@ -99,7 +99,7 @@ npm install
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [https://cross-border-payment-seven.vercel.app/](https://cross-border-payment-seven.vercel.app/) in your browser
 
 ## API Endpoints
 
