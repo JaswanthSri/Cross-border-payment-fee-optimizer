@@ -47,7 +47,7 @@ export function TransferOptimizer() {
     setAnalysisData(null) // Clear previous results
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}/api/transfer/analyze`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "https://cross-border-payment-fee-optimizer.onrender.com/"}/api/transfer/analyze`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

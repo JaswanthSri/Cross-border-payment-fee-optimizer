@@ -39,7 +39,7 @@ export function TransferForm({ onSubmit, isLoading }: TransferFormProps) {
   useEffect(() => {
     const fetchSourceCountries = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}/api/countries`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "https://cross-border-payment-fee-optimizer.onrender.com/"}/api/countries`)
         if (!response.ok) throw new Error("Failed to fetch source countries")
         const data: Country[] = await response.json()
         setSourceCountries(data.sort((a, b) => a.country.localeCompare(b.country)))
@@ -55,7 +55,7 @@ export function TransferForm({ onSubmit, isLoading }: TransferFormProps) {
     if (fromCountry) {
       const fetchDestinations = async () => {
         try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}/api/destinations/${fromCountry}`);
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "https://cross-border-payment-fee-optimizer.onrender.com/"}/api/destinations/${fromCountry}`);
           if (!response.ok) throw new Error("Failed to fetch destinations");
           const data: Country[] = await response.json();
           setDestinationCountries(data.sort((a, b) => a.country.localeCompare(b.country)));
