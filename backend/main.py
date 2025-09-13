@@ -159,7 +159,11 @@ def get_live_exchange_rate(source_currency: str, dest_currency: str) -> Optional
 
 # --- FastAPI App Initialization (No changes here) ---
 app = FastAPI()
-origins = ["http://localhost:3000", "https://cost-optimizer.vercel.app", "https://your-frontend-domain.vercel.app"]
+origins = [
+    "http://localhost:3000",  # for local testing
+    "https://cross-border-payment-seven.vercel.app",  # your deployed frontend
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
