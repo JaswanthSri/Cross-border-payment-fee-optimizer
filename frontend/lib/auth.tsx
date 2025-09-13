@@ -65,7 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const fetchCurrentUser = async (authToken: string) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cross-border-payment-fee-optimizer.onrender.com/'}/api/auth/me`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cross-border-payment-fee-optimizer.onrender.com'}/api/auth/me`, {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
@@ -96,7 +96,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (!tokenToUse) return
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cross-border-payment-fee-optimizer.onrender.com/'}/api/transfer/history`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cross-border-payment-fee-optimizer.onrender.com'}/api/transfer/history`, {
         headers: {
           'Authorization': `Bearer ${tokenToUse}`
         }
@@ -116,7 +116,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null)
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cross-border-payment-fee-optimizer.onrender.com/'}/api/auth/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cross-border-payment-fee-optimizer.onrender.com'}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -149,7 +149,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null)
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cross-border-payment-fee-optimizer.onrender.com/'}/api/auth/register`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cross-border-payment-fee-optimizer.onrender.com'}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
