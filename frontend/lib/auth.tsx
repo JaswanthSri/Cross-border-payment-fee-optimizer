@@ -61,11 +61,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } else {
       setIsLoading(false)
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchCurrentUser = async (authToken: string) => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/auth/me', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/api/auth/me`, {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
@@ -81,8 +81,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setToken(null)
         setUser(null)
       }
-    } catch (err) {
-      console.error('Error fetching current user:', err)
+    } catch (error) {
+      console.error('Error fetching current user:', error)
       localStorage.removeItem('authToken')
       setToken(null)
       setUser(null)
@@ -96,7 +96,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (!tokenToUse) return
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/transfer/history', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/api/transfer/history`, {
         headers: {
           'Authorization': `Bearer ${tokenToUse}`
         }
@@ -106,8 +106,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const data = await response.json()
         setTransferHistory(data.history)
       }
-    } catch (err) {
-      console.error('Error fetching transfer history:', err)
+    } catch (error) {
+      console.error('Error fetching transfer history:', error)
     }
   }
 
@@ -116,7 +116,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null)
     
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -149,7 +149,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null)
     
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/auth/register', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

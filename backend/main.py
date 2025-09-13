@@ -105,6 +105,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+import jwt
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+
 def verify_token(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
     try:
         payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
@@ -116,13 +119,13 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer(
                 headers={"WWW-Authenticate": "Bearer"},
             )
         return username
-    except jwt.ExpiredSignatureError:
+    except ExpiredSignatureError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token has expired",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    except jwt.JWTError:
+    except InvalidTokenError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
@@ -156,7 +159,7 @@ def get_live_exchange_rate(source_currency: str, dest_currency: str) -> Optional
 
 # --- FastAPI App Initialization (No changes here) ---
 app = FastAPI()
-origins = ["http://localhost:3000", "https://cost-optimizer.vercel.app"]
+origins = ["http://localhost:3000", "https://cost-optimizer.vercel.app", "https://your-frontend-domain.vercel.app"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -166,6 +169,10 @@ app.add_middleware(
 )
 
 # --- User Management API Endpoints ---
+
+@app.get("/")
+def read_root():
+    return {"message": "Backend is running!"}
 
 @app.post("/api/auth/register", response_model=UserResponse)
 def register_user(user: UserCreate):

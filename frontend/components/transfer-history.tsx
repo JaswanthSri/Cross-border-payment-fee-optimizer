@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Clock, MapPin, DollarSign, TrendingUp } from "lucide-react"
 import { useAuth } from "@/lib/auth"
-import { getStandardCurrencyCode } from "@/lib/currency"
+
 
 export function TransferHistory() {
   const { transferHistory, user } = useAuth()

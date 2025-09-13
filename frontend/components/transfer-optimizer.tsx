@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { TransferForm, type FormData } from "./transfer-form"
 import { CostAnalysis } from "./cost-analysis"
 import { ProviderRecommendations } from "./provider-recommendations"
@@ -48,7 +47,7 @@ export function TransferOptimizer() {
     setAnalysisData(null) // Clear previous results
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/transfer/analyze", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}/api/transfer/analyze`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -68,8 +67,9 @@ export function TransferOptimizer() {
 
       const result: AnalysisResponse = await response.json()
       setAnalysisData(result)
-    } catch (err: any) {
-      setError(err.message || "Failed to analyze transfer costs. Please try again.")
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to analyze transfer costs. Please try again."
+      setError(errorMessage)
     } finally {
       setIsAnalyzing(false)
     }
@@ -87,7 +87,7 @@ export function TransferOptimizer() {
             <div>
               <h3 className="text-xl font-semibold mb-2">Authentication Required</h3>
               <p className="text-muted-foreground">
-                Please use the "Sign In" button in the top-right corner to create an account or log in.
+                Please use the &quot;Sign In&quot; button in the top-right corner to create an account or log in.
               </p>
             </div>
           </div>
